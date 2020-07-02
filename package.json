@@ -1,0 +1,26 @@
+{
+  "name": "crud-compare",
+  "version": "1.0.0",
+  "description": "Helper utilities to compare objects or arrays for obtaining created, updated, & deleted values.",
+  "main": "index.js",
+  "scripts": {
+    "build": "rm -rf lib && babel src --out-dir lib",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tjmoses/crud-compare"
+  },
+  "homepage": "https://github.com/tjmoses/crud-compare#readme",
+  "keywords": [
+    "react compare objects",
+    "js compare objects",
+    "js object compare",
+    "create delete update object compare",
+    "save object values compare",
+    "compare objects for save",
+    "compare for crud"
+  ],
+  "author": "Tim M",
+  "license": "MIT"
+}
