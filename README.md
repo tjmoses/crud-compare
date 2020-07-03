@@ -1,4 +1,5 @@
 # CRUD Compare
+![npm](https://img.shields.io/npm/v/crud-compare) ![GitHub](https://img.shields.io/github/license/tjmoses/crud-compare)
 
 Provides create, delete, and update values from comparing an array of objects given a related key. Also, has a compare array function for easily obtaining the created and deleted values between two arrays (not objects).
 
