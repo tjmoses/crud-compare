@@ -3,6 +3,7 @@
 ![npm](https://img.shields.io/npm/v/crud-compare)
 ![npm bundle size](https://img.shields.io/bundlephobia/min/crud-compare)
 ![GitHub](https://img.shields.io/github/license/tjmoses/crud-compare)
+![Coverage](coverage/badge.svg)
 
 This is a very ✌ lightweight and ⚡️ fast library for comparing **objects** and **arrays** (mostly before save) to get the created, updated, and deleted values.
 

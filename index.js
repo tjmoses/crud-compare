@@ -31,7 +31,7 @@ function isEqualObject (a, b) {
  * @returns {{ createdVals: Object[], updatedVals: Object[], deletedVals: Object[] }}
  */
 function compareObjectVals (toCompareVals, key) {
-  if (toCompareVals.length > 2) {
+  if (toCompareVals.length !== 2) {
     throw new Error('Arguments are of the wrong length!');
   }
   var createdVals = [];
@@ -85,7 +85,7 @@ function compareObjectVals (toCompareVals, key) {
  * @returns {{ createdVals[], deletedVals[] }}
  */
 function compareArrayVals (toCompareVals) {
-  if (toCompareVals.length > 2 || toCompareVals.length === 0) {
+  if (toCompareVals.length !== 2) {
     throw new Error('Arguments are of the wrong length!');
   }
   var originalItem = toCompareVals[0];
