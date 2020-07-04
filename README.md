@@ -6,9 +6,9 @@
 
 This is a very ✌ lightweight and ⚡️ fast library for comparing **objects** and **arrays** (mostly before save) to get the created, updated, and deleted values.
 
-- Provides **Created**, **Updated**, and **Deleted** values (via separate arrays) from comparing an array of objects given a *related key*.
+- Provides **Created**, **Updated**, and **Deleted** values (via separate arrays) from comparing two arrays of objects given a *related key*.
   
-- Has a compare array function for easily obtaining the created and deleted values between two arrays.
+- Has a compare Array function for easily obtaining the created and deleted values between two arrays of primitives (strings, numbers, etc.).
 
 - Lastly, has a shallow (1 level deep) object comparing helper function for quick equivalence checks.
 
