@@ -1,4 +1,4 @@
-const { compareObjectVals, compareArrayVals, isEqualObject } = require('./index.js');
+const { compareObjectVals, compareArrayVals, isEqualObject } = require('./dist/index.js');
 
 const originalArrayOfObjects = [
   {'commonKey': 1, 'anotherkey': 'test'},
