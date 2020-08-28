@@ -38,6 +38,46 @@ describe('compareObjectVals Tests', () => {
       expect(e.message).toBe('Arguments are of the wrong length!')
     }
   })
+
+  test('compareObjectVals input validation', () => {
+    const origArray = [
+      [{'commonKey': 1, 'anotherkey': 'test'}],
+      [{'commonKey': 2}]
+    ]
+    const newArray = [
+      [{'commonKey': 2, 'anotherkey': 'test'}],
+      [{'commonKey': 5}]
+    ]
+    const newFakeArray2 = {
+      'commonKey': 2, 'anotherkey': 'test'
+    }
+
+    try {
+      const compareVals = compareObjectVals([origArray, newArray],'commonKey');
+      const { createdVals, updatedVals, deletedVals } = compareVals;
+    } catch (e) {
+      expect(e.message).toBe('The provided originalArray, is not an array of objects!')
+    }
+    try {
+      const compareVals = compareObjectVals([originalArrayOfObjects, newArray],'commonKey');
+      const { createdVals, updatedVals, deletedVals } = compareVals;
+    } catch (e) {
+      expect(e.message).toBe('The provided stateUpdatedArray, is not an array of objects!')
+    }
+    try {
+      const compareVals = compareObjectVals([originalArrayOfObjects, newFakeArray2],'commonKey');
+      const { createdVals, updatedVals, deletedVals } = compareVals;
+    } catch (e) {
+      expect(e.message).toBe('The originalArray and stateUpdatedArray must both be arrays!')
+    }
+    try {
+      const compareVals = compareObjectVals({originalArrayOfObjects, newFakeArray2},'commonKey');
+      const { createdVals, updatedVals, deletedVals } = compareVals;
+    } catch (e) {
+      expect(e.message).toBe(`toCompareVals must be an array of the originalArray 
+    and stateUpdatedArray you want to compare, and the key must be of type string!`);
+    }
+  })
 });
 
 const originalArrayItem = [1, 2, 'five', true, 33];

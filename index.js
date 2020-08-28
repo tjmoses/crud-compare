@@ -31,9 +31,8 @@ function isEqualObject (a, b) {
  * @returns {{ createdVals: Object[], updatedVals: Object[], deletedVals: Object[] }}
  */
 function compareObjectVals (toCompareVals, key) {
-  if (toCompareVals.length !== 2) {
-    throw new Error('Arguments are of the wrong length!');
-  }
+  handleInputValidation(toCompareVals, key);
+
   var createdVals = [];
   var updatedVals = [];
   var deletedVals = [];
@@ -76,6 +75,37 @@ function compareObjectVals (toCompareVals, key) {
     updatedVals: updatedVals,
     deletedVals: deletedVals
   };
+}
+
+function handleInputValidation(toCompareVals, key) {
+  if (!Array.isArray(toCompareVals) || typeof key !== 'string') {
+    throw new Error(`toCompareVals must be an array of the originalArray 
+    and stateUpdatedArray you want to compare, and the key must be of type string!`)
+  }
+  if (toCompareVals.length !== 2) {
+    throw new Error('Arguments are of the wrong length!');
+  }
+  if (!Array.isArray(toCompareVals[0]) || !Array.isArray(toCompareVals[1])) {
+    throw new Error(`The originalArray and stateUpdatedArray must both be arrays!`);
+  }
+  const firstElementExists = toCompareVals[0] && toCompareVals[0][0];
+  const secondElementExits = toCompareVals[1] && toCompareVals[1][0];
+  const firstElementIsNotArrayOfObjects =
+    (
+      firstElementExists && toCompareVals[0][0] !== Object(toCompareVals[0][0]) || 
+      firstElementExists && Array.isArray(toCompareVals[0][0])
+    )
+  const secondElementIsNotArrayOfObjects =
+    (
+      secondElementExits && toCompareVals[1][0] !== Object(toCompareVals[1][0]) || 
+      secondElementExits && Array.isArray(toCompareVals[1][0])
+    )
+  if (firstElementIsNotArrayOfObjects) {
+    throw new Error('The provided originalArray, is not an array of objects!');
+  }
+  if (secondElementIsNotArrayOfObjects) {
+    throw new Error('The provided stateUpdatedArray, is not an array of objects!');
+  }
 }
 
 /**

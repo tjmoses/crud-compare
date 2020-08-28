@@ -1,6 +1,6 @@
 {
   "name": "crud-compare",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "Helper utilities to compare objects or arrays for obtaining created, updated, & deleted values.",
   "source": "index.js",
   "main": "dist/index.js",
