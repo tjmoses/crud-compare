@@ -27,8 +27,8 @@ describe('compareObjectVals Tests', () => {
   test('empty original array of objects', () => {
     const { createdVals, updatedVals, deletedVals } = compareObjectVals([[], newArrayOfObjects], 'commonKey');
     expect(createdVals).toStrictEqual([{'commonKey': 2, 'newkey': 'test'},{'commonKey': 7}]);
-    expect(updatedVals).toStrictEqual([]);
-    expect(deletedVals).toStrictEqual([]);
+    expect(updatedVals).toStrictEqual(null);
+    expect(deletedVals).toStrictEqual(null);
   })
 
   test('compareObjectVals input wrong length', () => {

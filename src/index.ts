@@ -28,24 +28,25 @@ function isEqualObject (a, b) {
  * @param {Object[]} toCompareVals The first array item must be the original array of objects.
  * [originalArray, stateUpdatedArray]
  * @param {String!} key The related key between the objects
- * @returns {{ createdVals: Object[], updatedVals: Object[], deletedVals: Object[] }}
  */
-function compareObjectVals (toCompareVals, key) {
+function compareObjectVals (toCompareVals: [Object[], Object[]], key: string) : 
+  { createdVals: Object[] | null, updatedVals: Object[] | null, deletedVals: Object[] | null } {
+  
   handleInputValidation(toCompareVals, key);
 
-  var createdVals = [];
-  var updatedVals = [];
-  var deletedVals = [];
-  var originalItemKeys = [];
-  var activeItemKeys = [];
+  var createdVals: any[] | null = [];
+  var updatedVals: any[] | null = [];
+  var deletedVals: any[] | null = [];
+  var originalItemKeys: any[] = [];
+  var activeItemKeys: any[] = [];
   var originalItem = toCompareVals[0];
   var activeItem = toCompareVals[1];
 
   if (!originalItem.length) {
     return {
       createdVals: activeItem,
-      updatedVals: [],
-      deletedVals: []
+      updatedVals: null,
+      deletedVals: null
     };
   }
 
@@ -71,9 +72,9 @@ function compareObjectVals (toCompareVals, key) {
   }
 
   return {
-    createdVals: createdVals,
-    updatedVals: updatedVals,
-    deletedVals: deletedVals
+    createdVals: createdVals.length ? createdVals : null,
+    updatedVals: updatedVals.length ? updatedVals : null,
+    deletedVals: deletedVals.length ? deletedVals : null
   };
 }
 
@@ -112,9 +113,8 @@ function handleInputValidation(toCompareVals, key) {
  * Compare two arrays, to get the created & deleted values
  * @param {Object[]} toCompareVals The first array item must be the original array.
  * [originalArray, stateUpdatedArray]
- * @returns {{ createdVals[], deletedVals[] }}
  */
-function compareArrayVals (toCompareVals) {
+function compareArrayVals (toCompareVals: [any[], any[]]) : { createdVals: any[], deletedVals: any[] } {
   if (toCompareVals.length !== 2) {
     throw new Error('Arguments are of the wrong length!');
   }

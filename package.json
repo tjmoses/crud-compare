@@ -1,13 +1,8 @@
 {
   "name": "crud-compare",
-  "version": "1.0.6",
+  "version": "2.0.0",
   "description": "Helper utilities to compare objects or arrays for obtaining created, updated, & deleted values.",
-  "source": "index.js",
   "main": "dist/index.js",
-  "scripts": {
-    "build": "microbundle --format cjs",
-    "test": "jest --verbose --coverage"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/tjmoses/crud-compare"
@@ -30,10 +25,18 @@
   ],
   "author": "Tim M",
   "license": "MIT",
+  "scripts": {
+    "start": "npx tsc",
+    "build": "microbundle --format cjs",
+    "test": "jest --verbose --coverage",
+    "format": "npx prettier-standard 'src/*.{ts,tsx}'",
+    "lint": "npx prettier-standard 'src/*.{ts,tsx}' --fix"
+  },
   "devDependencies": {
     "jest": "^26.1.0",
     "make-coverage-badge": "^1.2.0",
-    "microbundle": "^0.12.2"
+    "prettier-standard": "^16.4.1",
+    "typescript": "^4.0.2"
   },
   "jest": {
     "coverageReporters": [
