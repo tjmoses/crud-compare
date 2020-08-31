@@ -28,6 +28,8 @@ function isEqualObject (a, b) {
  * @param {Object[]} toCompareVals The first array item must be the original array of objects.
  * [originalArray, stateUpdatedArray]
  * @param {String!} key The related key between the objects
+ * @returns returns three objects with the corresponding created, updated, and deleted values
+ * respectively. Returns null for one of the corresponding values if it doesn't exist.
  */
 function compareObjectVals (toCompareVals: [Object[], Object[]], key: string) : 
   { createdVals: Object[] | null, updatedVals: Object[] | null, deletedVals: Object[] | null } {
@@ -113,8 +115,10 @@ function handleInputValidation(toCompareVals, key) {
  * Compare two arrays, to get the created & deleted values
  * @param {Object[]} toCompareVals The first array item must be the original array.
  * [originalArray, stateUpdatedArray]
+ * @returns Returns two arrays corresponding to the created, and deleted values
+ * respectively. Returns null for one of the corresponding values if it doesn't exist.
  */
-function compareArrayVals (toCompareVals: [any[], any[]]) : { createdVals: any[], deletedVals: any[] } {
+function compareArrayVals (toCompareVals: [any[], any[]]) : { createdVals: any[] | null, deletedVals: any[] | null } {
   if (toCompareVals.length !== 2) {
     throw new Error('Arguments are of the wrong length!');
   }
@@ -124,7 +128,7 @@ function compareArrayVals (toCompareVals: [any[], any[]]) : { createdVals: any[]
   if (!originalItem.length) {
     return {
       createdVals: activeItem,
-      deletedVals: []
+      deletedVals: null
     };
   }
   var deletedVals = originalItem.filter(function (v) {
@@ -134,8 +138,8 @@ function compareArrayVals (toCompareVals: [any[], any[]]) : { createdVals: any[]
     return originalItem.indexOf(v) === -1;
   });
   return {
-    createdVals: createdVals,
-    deletedVals: deletedVals
+    createdVals: createdVals.length ? createdVals : null,
+    deletedVals: deletedVals.length ? deletedVals : null
   };
 }
 

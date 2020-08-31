@@ -107,9 +107,9 @@ describe('compareArrayVals Tests', () => {
 
   test('Empty original item', () => {
     const { createdVals, deletedVals } = compareArrayVals([[], updatedArrayItem]);
-    expect
+    console.log({ deletedVals });
     expect(createdVals).toStrictEqual([1, 'seven', true, 33]);
-    expect(deletedVals).toStrictEqual([]);
+    expect(deletedVals).toStrictEqual(null);
   });
 });
 
