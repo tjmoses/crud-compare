@@ -5,6 +5,7 @@
 ![Coverage](coverage/badge.svg)
 ![GitHub](https://img.shields.io/github/license/tjmoses/crud-compare)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
+[![CircleCI](https://circleci.com/gh/tjmoses/crud-compare/tree/master.svg?style=svg)](https://circleci.com/gh/circleci/circleci-docs)
 
 This is a very ✌ lightweight and ⚡️ fast library for comparing **objects** and **arrays** (mostly before save) to get the created, updated, and deleted values.
 
