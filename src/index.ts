@@ -139,6 +139,4 @@ function compareArrayVals (toCompareVals: [any[], any[]]) : { createdVals: any[]
   };
 }
 
-exports.isEqualObject = isEqualObject;
-exports.compareArrayVals = compareArrayVals;
-exports.compareObjectVals = compareObjectVals;
+export { isEqualObject, compareArrayVals, compareObjectVals };
