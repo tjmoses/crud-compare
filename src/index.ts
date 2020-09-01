@@ -82,14 +82,14 @@ function compareObjectVals (toCompareVals: [Object[], Object[]], key: string) :
 
 function handleInputValidation(toCompareVals, key) {
   if (!Array.isArray(toCompareVals) || typeof key !== 'string') {
-    throw new Error(`toCompareVals must be an array of the originalArray 
+    throw new TypeError(`toCompareVals must be an array of the originalArray 
     and stateUpdatedArray you want to compare, and the key must be of type string!`)
   }
   if (toCompareVals.length !== 2) {
     throw new Error('Arguments are of the wrong length!');
   }
   if (!Array.isArray(toCompareVals[0]) || !Array.isArray(toCompareVals[1])) {
-    throw new Error(`The originalArray and stateUpdatedArray must both be arrays!`);
+    throw new TypeError(`The originalArray and stateUpdatedArray must both be arrays!`);
   }
   const firstElementExists = toCompareVals[0] && toCompareVals[0][0];
   const secondElementExits = toCompareVals[1] && toCompareVals[1][0];
@@ -104,10 +104,10 @@ function handleInputValidation(toCompareVals, key) {
       secondElementExits && Array.isArray(toCompareVals[1][0])
     )
   if (firstElementIsNotArrayOfObjects) {
-    throw new Error('The provided originalArray, is not an array of objects!');
+    throw new TypeError('The provided originalArray, is not an array of objects!');
   }
   if (secondElementIsNotArrayOfObjects) {
-    throw new Error('The provided stateUpdatedArray, is not an array of objects!');
+    throw new TypeError('The provided stateUpdatedArray, is not an array of objects!');
   }
 }
 
