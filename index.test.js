@@ -78,6 +78,13 @@ describe('compareObjectVals Tests', () => {
     and stateUpdatedArray you want to compare, and the key must be of type string!`);
     }
   })
+
+  test('receive both as empty arrays', () => {
+    const compareVals = compareObjectVals([[], []],'commonKey');
+    expect(compareVals.createdVals).toBe(null);
+    expect(compareVals.updatedVals).toBe(null);
+    expect(compareVals.deletedVals).toBe(null);
+  })
 });
 
 const originalArrayItem = [1, 2, 'five', true, 33];

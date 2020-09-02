@@ -46,7 +46,7 @@ function compareObjectVals (toCompareVals: [Object[], Object[]], key: string) :
 
   if (!originalItem.length) {
     return {
-      createdVals: activeItem,
+      createdVals: activeItem.length ? activeItem : null,
       updatedVals: null,
       deletedVals: null
     };
