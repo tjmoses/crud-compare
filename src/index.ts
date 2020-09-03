@@ -127,7 +127,7 @@ function compareArrayVals (toCompareVals: [any[], any[]]) : { createdVals: any[]
 
   if (!originalItem.length) {
     return {
-      createdVals: activeItem,
+      createdVals: activeItem.length ? activeItem : null,
       deletedVals: null
     };
   }

@@ -114,10 +114,15 @@ describe('compareArrayVals Tests', () => {
 
   test('Empty original item', () => {
     const { createdVals, deletedVals } = compareArrayVals([[], updatedArrayItem]);
-    console.log({ deletedVals });
     expect(createdVals).toStrictEqual([1, 'seven', true, 33]);
     expect(deletedVals).toStrictEqual(null);
   });
+
+  test('Received two empty array items', () => {
+    const { createdVals, deletedVals } = compareArrayVals([[], []]);
+    expect(createdVals).toStrictEqual(null);
+    expect(deletedVals).toStrictEqual(null);
+  })
 });
 
 const ob1 = { 'test': 1, 'test2': 2 };
