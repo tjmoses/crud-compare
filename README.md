@@ -51,7 +51,7 @@ const areObjectsEquivalent = compare.isEqualObject(
 
 ```
 
-The length of a created, updated, or deleted value will be empty if they didn't exist. A shallow compare is performed on objects within the compareObjectVals function.
+The values of the returned created, updated, or deleted values for compareObjectVals / compareArrayVals will be null if they do not exist. A shallow compare is performed on objects within the compareObjectVals function.
 
 ## Contribute
 
