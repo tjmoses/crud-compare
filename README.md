@@ -1,4 +1,4 @@
-# CRUD Compare - Object State Comparison Helper
+# CRUD Compare - JS State Comparison Helper
 
 ![npm](https://img.shields.io/npm/v/crud-compare)
 ![npm bundle size](https://img.shields.io/bundlephobia/min/crud-compare)
