@@ -1,4 +1,4 @@
-# CRUD Compare
+# CRUD Compare - Object State Comparison Helper
 
 ![npm](https://img.shields.io/npm/v/crud-compare)
 ![npm bundle size](https://img.shields.io/bundlephobia/min/crud-compare)
@@ -7,7 +7,7 @@
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
 [![CircleCI](https://circleci.com/gh/tjmoses/crud-compare/tree/master.svg?style=svg)](https://circleci.com/gh/circleci/circleci-docs)
 
-This is a very ✌ lightweight and ⚡️ fast library for comparing **objects** and **arrays** (mostly before save) to get the created, updated, and deleted values.
+This is a very ✌ lightweight and ⚡️ fast library for comparing **objects** and **arrays** (mostly before save) to get the created, updated, and deleted values for state comparisons.
 
 - Provides **Created**, **Updated**, and **Deleted** values (via separate arrays) from comparing two arrays of objects given a *related key*, using the ***compareObjectVals*** function.
   
