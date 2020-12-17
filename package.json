@@ -31,7 +31,6 @@
   "license": "MIT",
   "scripts": {
     "start": "npx tsc",
-    "build": "microbundle --format cjs",
     "test": "jest --verbose --coverage",
     "format": "npx prettier-standard 'src/*.{ts,tsx}'",
     "lint": "npx prettier-standard 'src/*.{ts,tsx}' --fix"
