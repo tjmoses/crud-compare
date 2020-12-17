@@ -127,8 +127,20 @@ describe('compareArrayVals Tests', () => {
 
 const ob1 = { 'test': 1, 'test2': 2 };
 const ob2 = { 'test': 1, 'test2': 2 };
+const ob3 = { 'a': undefined };
+const ob4 = { 'b': 'something' };
 
-test('isEqualObject truth tests', () => {
+describe('helper isEqualObject comparer tests', () => {
+
+test('isEqualObject truthy tests', () => {
   expect(isEqualObject(ob1, ob2)).toBe(true);
+  expect(isEqualObject(ob3, ob3)).toBe(true);
+});
+
+test('isEqualObject falsy tests', () => {
   expect(isEqualObject(originalArrayOfObjects[0], newArrayOfObjects[0])).toBe(false);
-})
+  expect(isEqualObject(ob3, ob4)).toBe(false);
+  expect(isEqualObject(ob4, ob3)).toBe(false);
+});
+
+});

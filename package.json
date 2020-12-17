@@ -1,6 +1,6 @@
 {
   "name": "crud-compare",
-  "version": "2.0.5",
+  "version": "2.0.6",
   "description": "Helper utilities to compare objects or arrays for obtaining created, updated, & deleted values.",
   "main": "dist/index.js",
   "repository": {
@@ -21,7 +21,11 @@
     "compare",
     "diff",
     "object-diff",
-    "compare-obj"
+    "compare-obj",
+    "state compare",
+    "js state compare",
+    "diff-array-of-objects",
+    "diff-array"
   ],
   "author": "Tim M",
   "license": "MIT",

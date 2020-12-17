@@ -7,15 +7,15 @@
  * @param {Object} a
  * @param {Object} b
  */
-function isEqualObject (a, b) {
+function isEqualObject (a: Object, b: Object) {
   var aProps = Object.getOwnPropertyNames(a);
   var bProps = Object.getOwnPropertyNames(b);
   if (aProps.length !== bProps.length) return false;
 
   for (var i = 0; i < aProps.length; i++) {
     var propName = aProps[i];
-
-    if (a[propName] !== b[propName]) {
+    
+    if (bProps.indexOf(propName) == -1 || a[propName] !== b[propName]) {
       return false;
     }
   }
