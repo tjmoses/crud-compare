@@ -24,52 +24,55 @@ function isEqualObject (a: Object, b: Object) {
 }
 
 /**
+ * function to determine if two objects match
+ */
+type MatcherFunction = (o1: any, o2: any) => boolean;
+
+/**
  * Compare two arrays of objects, to get the created, updated, and deleted values
- * @param {Object[]} toCompareVals The first array item must be the original array of objects.
+ * @param {[Object[], Object[]]} toCompareVals The first array item must be the original array of objects.
  * [originalArray, stateUpdatedArray]
- * @param {String!} key The related key between the objects
+ * @param {String! | MatcherFunction} keyOrMatcher The related key between the objects, or a custom matcher function receiving two objects and returning true if they match
  * @returns returns three objects with the corresponding created, updated, and deleted values
  * respectively. Returns null for one of the corresponding values if it doesn't exist.
  */
-function compareObjectVals (toCompareVals: [Object[], Object[]], key: string) : 
+function compareObjectVals (toCompareVals: [Object[], Object[]], keyOrMatcher: string | MatcherFunction ) : 
   { createdVals: Object[] | null, updatedVals: Object[] | null, deletedVals: Object[] | null } {
   
-  handleInputValidation(toCompareVals, key);
+  handleInputValidation(toCompareVals, keyOrMatcher);
 
   var createdVals: any[] | null = [];
   var updatedVals: any[] | null = [];
   var deletedVals: any[] | null = [];
-  var originalItemKeys: any[] = [];
-  var activeItemKeys: any[] = [];
-  var originalItem = toCompareVals[0];
-  var activeItem = toCompareVals[1];
+  var originalItems = toCompareVals[0];
+  var activeItems = toCompareVals[1];
 
-  if (!originalItem.length) {
+  if (!originalItems.length) {
     return {
-      createdVals: activeItem.length ? activeItem : null,
+      createdVals: activeItems.length ? activeItems : null,
       updatedVals: null,
       deletedVals: null
     };
   }
 
-  for (var i = 0; i < originalItem.length; i++) {
-    var outerKeyVal = originalItem[i][key];
-    originalItemKeys.push(outerKeyVal);
+  const matcher: MatcherFunction = typeof keyOrMatcher === 'string'
+    ? (o1, o2) => o1[keyOrMatcher] === o2[keyOrMatcher]
+    : keyOrMatcher;
+  
+  for (var i = 0; i < originalItems.length; i++) {
+    const outerObj = originalItems[i];
+    for (var j = 0; j < activeItems.length; j++) {
+      const innerObj = activeItems[j];
 
-    for (var j = 0; j < activeItem.length; j++) {
-      if (i === 0) {
-        activeItemKeys.push(activeItem[j][key]);
-      }
-
-      if (i === originalItem.length - 1 && originalItemKeys.indexOf(activeItem[j][key]) === -1) {
-        createdVals.push(activeItem[j]);
-      } else if (originalItem[i][key] === activeItem[j][key] && !isEqualObject(originalItem[i], activeItem[j])) {
-        updatedVals.push(activeItem[j]);
+      if (i === originalItems.length - 1 && originalItems.every(o1 => !matcher(o1, innerObj))) {
+        createdVals.push(innerObj);
+      } else if (matcher(outerObj, innerObj) && !isEqualObject(outerObj, innerObj)) {
+        updatedVals.push(innerObj);
       }
     }
 
-    if (activeItemKeys.indexOf(outerKeyVal) === -1) {
-      deletedVals.push(originalItem[i]);
+    if(activeItems.every(o2 => !matcher(outerObj, o2))) {
+      deletedVals.push(outerObj);
     }
   }
 
@@ -80,10 +83,10 @@ function compareObjectVals (toCompareVals: [Object[], Object[]], key: string) :
   };
 }
 
-function handleInputValidation(toCompareVals, key) {
-  if (!Array.isArray(toCompareVals) || typeof key !== 'string') {
+function handleInputValidation(toCompareVals, keyOrMatcher) {
+  if (!Array.isArray(toCompareVals) || !(typeof keyOrMatcher === 'string' || typeof keyOrMatcher === 'function')) {
     throw new TypeError(`toCompareVals must be an array of the originalArray 
-    and stateUpdatedArray you want to compare, and the key must be of type string!`)
+    and stateUpdatedArray you want to compare, and the keyOrMatcher must be of type string or function!`)
   }
   if (toCompareVals.length !== 2) {
     throw new Error('Arguments are of the wrong length!');

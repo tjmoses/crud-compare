@@ -26,24 +26,34 @@ npm install crud-compare
 ```js
 const compare = require("crud-compare");
 
+// comparing array of objects - using a single property as key.
 const { createdVals, updatedVals, deletedVals } = compare.compareObjectVals(
   [
     originalArrayOfObjects,
     newArrayOfObjects
   ],
-  relatedObjectKey
+  relatedObjectKey  // string - the name of the property to be used as key
 );
 
-// perform crud operations...
+// comparing array of objects - using custom matcher logic.
+matcher = (o1, o2) => o1.fName === o2.fName && o1.lName === o2.lName; // (o1: any, o2: any) => boolean
+const { createdVals, updatedVals, deletedVals } = compare.compareObjectVals(
+  [
+    originalArrayOfObjects,
+    newArrayOfObjects
+  ],
+  matcher
+);
 
+// comparing array of primitives values (based on strict equality)
 const { createdVals, deletedVals } = compare.compareArrayVals(
   [
     originalArrayItem,
     updatedArrayItem
   ]
 );
-// perform further operations...
 
+// helper function for comparing 2 objects - 1 level deep strict equality
 const areObjectsEquivalent = compare.isEqualObject(
   obj1,
   obj2

@@ -9,6 +9,15 @@ const newArrayOfObjects = [
   {'commonKey': 7}
 ];
 
+const originalArrayOfComplexObjects = [
+  {'key1': 1, 'key2': '1', 'otherProperty': 'stuff 1'},
+  {'key1': 2, 'key2': '2', 'otherProperty': 'stuff 2'}
+];
+
+const newArrayOfComplexObjects = [
+  {'key1': 2, 'key2': '2', 'otherProperty': 'new stuff'},
+  {'key1': 7, 'key2': '7'}
+];
 describe('compareObjectVals Tests', () => {
   test('compareObjectVals functionality', () => {
     const { createdVals, updatedVals, deletedVals } = compareObjectVals(
@@ -22,6 +31,20 @@ describe('compareObjectVals Tests', () => {
     expect(createdVals).toStrictEqual([{'commonKey': 7}]);
     expect(updatedVals).toStrictEqual([{'commonKey': 2, 'newkey': 'test'}]);
     expect(deletedVals).toStrictEqual([{'commonKey': 1, 'anotherkey': 'test'}]);
+  });
+
+  test('compareObjectVals with complex key', () => {
+    const { createdVals, updatedVals, deletedVals } = compareObjectVals(
+    [
+      originalArrayOfComplexObjects,
+      newArrayOfComplexObjects
+    ],
+    (obj1, obj2) => obj1.key1 === obj2.key1 && obj1.key2 === obj2.key2
+    );
+
+    expect(createdVals).toStrictEqual([{'key1': 7, 'key2': '7'}]);
+    expect(updatedVals).toStrictEqual([{'key1': 2, 'key2': '2', 'otherProperty': 'new stuff'}]);
+    expect(deletedVals).toStrictEqual([{'key1': 1, 'key2': '1', 'otherProperty': 'stuff 1'}]);
   });
 
   test('empty original array of objects', () => {
@@ -75,7 +98,7 @@ describe('compareObjectVals Tests', () => {
       const { createdVals, updatedVals, deletedVals } = compareVals;
     } catch (e) {
       expect(e.message).toBe(`toCompareVals must be an array of the originalArray 
-    and stateUpdatedArray you want to compare, and the key must be of type string!`);
+    and stateUpdatedArray you want to compare, and the keyOrMatcher must be of type string or function!`);
     }
   })
 
