@@ -3,23 +3,61 @@
  */
 
 /**
- * Check if two objects are equal
+ * Check if two objects are equal w/ deep comparison
  * @param {Object} a
  * @param {Object} b
  */
-function isEqualObject (a: Object, b: Object) {
+function isEqualObject (a: Object, b: Object): Boolean {
+  if (Array.isArray(a) && Array.isArray(b)) return isEqualArray(a, b);
+  if (typeof a !== 'object' && typeof b !== 'object') return Object.is(a, b);
   var aProps = Object.getOwnPropertyNames(a);
   var bProps = Object.getOwnPropertyNames(b);
   if (aProps.length !== bProps.length) return false;
-
-  for (var i = 0; i < aProps.length; i++) {
+  var i = 0;
+  while (i < aProps.length) {
     var propName = aProps[i];
-    
-    if (bProps.indexOf(propName) == -1 || a[propName] !== b[propName]) {
+    if (typeof a[propName] == 'object' && typeof b[propName] == 'object') {
+      if (
+        Array.isArray(a[propName]) && 
+        Array.isArray(b[propName])) {
+        if (!isEqualArray(a[propName], b[propName])) return false;
+      }
+      else if (!isEqualObject(a[propName], b[propName])) return false;
+    }
+    else if (
+      bProps.indexOf(propName) == -1 || 
+      !Object.is(a[propName], b[propName])) {
       return false;
     }
+    i++;
   }
+  return true;
+}
 
+/**
+ * Check if two arrays are equal w/ deep comparison
+ * @param {Object} a
+ * @param {Object} b
+ */
+function isEqualArray (a: any[], b: any[]): Boolean {
+  if (a.length !== b.length) {
+    return false;
+  }
+  for (var i = 0; i < a.length; i++) {
+    if (
+      typeof a[i] !== 'object' && 
+      b.indexOf(a[i]) === -1) return false;
+    else if (
+      typeof a[i] === 'object' && 
+      !Array.isArray(a[i]) &&
+      !isEqualObject(a[i], b[i])
+    ) return false;
+    else if (
+      Array.isArray(a[i]) &&
+      Array.isArray(b[i]) &&
+      !isEqualArray(a[i], b[i])
+    ) return false;
+  }
   return true;
 }
 
@@ -39,10 +77,10 @@ function compareObjectVals (toCompareVals: [Object[], Object[]], key: string) :
   var createdVals: any[] | null = [];
   var updatedVals: any[] | null = [];
   var deletedVals: any[] | null = [];
-  var originalItemKeys: any[] = [];
-  var activeItemKeys: any[] = [];
-  var originalItem = toCompareVals[0];
-  var activeItem = toCompareVals[1];
+  var originalItem: Object[] = toCompareVals[0];
+  var activeItem: Object[] = toCompareVals[1];
+  var i: number = 0, j: number = 0, 
+      originalSameKeyValue: Boolean = false, activeSameKeyValue: Boolean[] = [];
 
   if (!originalItem.length) {
     return {
@@ -52,25 +90,32 @@ function compareObjectVals (toCompareVals: [Object[], Object[]], key: string) :
     };
   }
 
-  for (var i = 0; i < originalItem.length; i++) {
-    var outerKeyVal = originalItem[i][key];
-    originalItemKeys.push(outerKeyVal);
+  while (i < originalItem.length) {
+    j = 0;
+  
+    while (j < activeItem.length) {
+      var sameKeyVal = isEqualObject(originalItem[i][key], activeItem[j][key]);
+      originalSameKeyValue = sameKeyVal || originalSameKeyValue;
+      activeSameKeyValue[j] = sameKeyVal || activeSameKeyValue[j] || false;
+      var isLastOriginalItemRun = i === originalItem.length - 1;
 
-    for (var j = 0; j < activeItem.length; j++) {
-      if (i === 0) {
-        activeItemKeys.push(activeItem[j][key]);
+      if (isLastOriginalItemRun && !activeSameKeyValue[j]) {
+         createdVals.push(activeItem[j]);
       }
-
-      if (i === originalItem.length - 1 && originalItemKeys.indexOf(activeItem[j][key]) === -1) {
-        createdVals.push(activeItem[j]);
-      } else if (originalItem[i][key] === activeItem[j][key] && !isEqualObject(originalItem[i], activeItem[j])) {
+      else if (
+        isLastOriginalItemRun &&
+        activeSameKeyValue[j] &&
+        !isEqualObject(originalItem[i], activeItem[j])) {
         updatedVals.push(activeItem[j]);
       }
+      j++;
     }
 
-    if (activeItemKeys.indexOf(outerKeyVal) === -1) {
+    if (!originalSameKeyValue) {
       deletedVals.push(originalItem[i]);
     }
+    originalSameKeyValue = false;
+    i++;
   }
 
   return {
@@ -80,7 +125,7 @@ function compareObjectVals (toCompareVals: [Object[], Object[]], key: string) :
   };
 }
 
-function handleInputValidation(toCompareVals, key) {
+function handleInputValidation(toCompareVals: [Object[], Object[]], key: string) {
   if (!Array.isArray(toCompareVals) || typeof key !== 'string') {
     throw new TypeError(`toCompareVals must be an array of the originalArray 
     and stateUpdatedArray you want to compare, and the key must be of type string!`)
@@ -91,14 +136,14 @@ function handleInputValidation(toCompareVals, key) {
   if (!Array.isArray(toCompareVals[0]) || !Array.isArray(toCompareVals[1])) {
     throw new TypeError(`The originalArray and stateUpdatedArray must both be arrays!`);
   }
-  const firstElementExists = toCompareVals[0] && toCompareVals[0][0];
-  const secondElementExits = toCompareVals[1] && toCompareVals[1][0];
-  const firstElementIsNotArrayOfObjects =
+  var firstElementExists = toCompareVals[0] && toCompareVals[0][0];
+  var secondElementExits = toCompareVals[1] && toCompareVals[1][0];
+  var firstElementIsNotArrayOfObjects =
     (
       firstElementExists && toCompareVals[0][0] !== Object(toCompareVals[0][0]) || 
       firstElementExists && Array.isArray(toCompareVals[0][0])
     )
-  const secondElementIsNotArrayOfObjects =
+  var secondElementIsNotArrayOfObjects =
     (
       secondElementExits && toCompareVals[1][0] !== Object(toCompareVals[1][0]) || 
       secondElementExits && Array.isArray(toCompareVals[1][0])
@@ -143,4 +188,4 @@ function compareArrayVals (toCompareVals: [any[], any[]]) : { createdVals: any[]
   };
 }
 
-export { isEqualObject, compareArrayVals, compareObjectVals };
+export { isEqualObject, isEqualArray, compareArrayVals, compareObjectVals };

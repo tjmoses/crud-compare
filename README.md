@@ -13,7 +13,7 @@ This is a very ✌ lightweight and ⚡️ fast library for comparing **objects**
   
 - Provides **Created** and **Deleted** values between two arrays of primitives (strings, numbers, etc.) using the ***compareArrayVals*** function.
 
-- Lastly, has a shallow (1 level deep) object comparing helper function for quick equivalence checks using the ***isEqualObject*** function.
+- Lastly, has a deep Object and Array comparing helper functions for quick equivalence checks using the ***isEqualObject*** or ***isEqualArray*** function. *Note: [Object.is()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/is) is used for primative data type comparison checks.
 
 ## Install
 
