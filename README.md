@@ -15,6 +15,8 @@ This is a very ✌ lightweight and ⚡️ fast library for comparing **objects**
 
 - Lastly, has a deep Object and Array comparing helper functions for quick equivalence checks using the ***isEqualObject*** or ***isEqualArray*** function. *Note: [Object.is()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/is) is used for primative data type comparison checks.
 
+To support, Please &#127775; if you used / like this library!
+
 ## Install
 
 ```bash
