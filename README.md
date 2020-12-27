@@ -1,11 +1,11 @@
 # CRUD Object Diff - JS State Comparison Helper
 
-![npm](https://img.shields.io/npm/v/crud-compare)
-![npm bundle size](https://img.shields.io/bundlephobia/min/crud-compare)
+![npm](https://img.shields.io/npm/v/crud-object-diff)
+![npm bundle size](https://img.shields.io/bundlephobia/min/crud-object-diff)
 ![Coverage](coverage/badge.svg)
-![GitHub](https://img.shields.io/github/license/tjmoses/crud-compare)
+![GitHub](https://img.shields.io/github/license/tjmoses/crud-object-diff)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
-[![CircleCI](https://circleci.com/gh/tjmoses/crud-compare/tree/master.svg?style=svg)](https://circleci.com/gh/circleci/circleci-docs)
+[![CircleCI](https://circleci.com/gh/tjmoses/crud-object-diff/tree/master.svg?style=svg)](https://circleci.com/gh/circleci/circleci-docs)
 
 This is a very ✌ lightweight and ⚡️ fast library for comparing **objects** and **arrays** (mostly before save) to get the created, updated, and deleted values for state comparisons.
 
