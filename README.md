@@ -15,7 +15,7 @@
   - [Usage](#usage)
     - [Comparing Arrays of Objects](#comparing-arrays-of-objects)
     - [Comparing Arrays](#comparing-arrays)
-    - [Comparing Two Arrays or Two Objects via helper functions](#comparing-two-arrays-or-two-objects-via-helper-functions)
+    - [Comparing Two Arrays or Two Objects for *Equivalence* via helper functions](#comparing-two-arrays-or-two-objects-for-equivalence-via-helper-functions)
   - [Todo](#todo)
   - [Contributing](#contributing)
   - [License](#license)
@@ -81,7 +81,7 @@ console.log(deletedVals); // [2, 'five']
 
 See further examples [here](https://github.com/tjmoses/crud-object-diff/blob/master/index.test.js#L285).
 
-### Comparing Two Arrays or Two Objects via helper functions
+### Comparing Two Arrays or Two Objects for *Equivalence* via helper functions
 
 `isEqualObject(a: Object, b: Object): Boolean`
 
