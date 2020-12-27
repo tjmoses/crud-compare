@@ -31,7 +31,8 @@
     "objects updated",
     "diff-arrays-of-objects",
     "js-diff-arrays",
-    "js diff objects"
+    "js diff objects",
+    "nested object diff"
   ],
   "author": "Tim M",
   "license": "MIT",
