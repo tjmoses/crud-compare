@@ -9,51 +9,76 @@
 
 This is a very ✌ lightweight and ⚡️ fast library for comparing **objects** and **arrays** (mostly before save) to get the created, updated, and deleted values for state comparisons.
 
-- Provides **Created**, **Updated**, and **Deleted** values (via separate arrays) from comparing two arrays of objects given a *related key*, using the ***compareObjectVals*** function.
-  
-- Provides **Created** and **Deleted** values between two arrays of primitives (strings, numbers, etc.) using the ***compareArrayVals*** function.
-
-- Lastly, has a deep Object and Array comparing helper functions for quick equivalence checks using the ***isEqualObject*** or ***isEqualArray*** function. *Note: [Object.is()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/is) is used for primative data type comparison checks.
-
-To support, Please &#127775; if you used / like this library!
+- [CRUD Object Diff - JS State Comparison Helper](#crud-object-diff---js-state-comparison-helper)
+  - [Install](#install)
+  - [Usage](#usage)
+    - [Comparing Arrays of Objects](#comparing-arrays-of-objects)
+    - [Comparing Arrays](#comparing-arrays)
+    - [Comparing Two Arrays or Two Objects via helper functions](#comparing-two-arrays-or-two-objects-via-helper-functions)
+  - [Todo](#todo)
+  - [Contribute](#contribute)
+  - [License](#license)
 
 ## Install
 
 ```bash
-npm install crud-compare
+npm install crud-object-diff
 ```
 
 ## Usage
 
-```js
-const compare = require("crud-compare");
+### Comparing Arrays of Objects
 
-const { createdVals, updatedVals, deletedVals } = compare.compareObjectVals(
+- Provides **Created**, **Updated**, and **Deleted** values (via separate arrays) from comparing two arrays of objects.
+- It is **recommended** to provide a *related unique key* (i.e. primary key on data) between the objects to be compared using the ***compareObjectVals*** function. A single or composite (several keys) key can be provided in an array for relatedObjectKey.
+- Without giving a related key, the algorithm traverses every single key in each provided object looking for when a single object key is matched along with a value with equivalence between the matching found key.
+- The values of the returned created, updated, or deleted arrays from compareObjectVals / compareArrayVals functions will be null if they do not exist.
+
+```js
+const { createdVals, updatedVals, deletedVals } = compareObjectVals(
   [
     originalArrayOfObjects,
     newArrayOfObjects
   ],
-  relatedObjectKey
+  relatedObjectKey // Not required, but suggested for speed.
 );
+```
 
-// perform crud operations...
+### Comparing Arrays
 
-const { createdVals, deletedVals } = compare.compareArrayVals(
+- Provides **Created** and **Deleted** values between two arrays of primitives (strings, numbers, etc.) using the ***compareArrayVals*** function.
+
+```js
+const { createdVals, deletedVals } = compareArrayVals(
   [
     originalArrayItem,
     updatedArrayItem
   ]
 );
-// perform further operations...
+```
 
-const areObjectsEquivalent = compare.isEqualObject(
+### Comparing Two Arrays or Two Objects via helper functions
+
+- Deep Object and Array comparing helper functions are provided for quick equivalence checks using the ***isEqualObject*** or ***isEqualArray*** functions. *Note: [Object.is()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/is) is used for primative data type comparison checks.
+
+```js
+const areObjectsEquivalent = isEqualObject(
   obj1,
   obj2
 );
-
+const areArraysEquivalent = isEqualArray(
+  array1,
+  array2
+);
 ```
 
-The values of the returned created, updated, or deleted values for compareObjectVals / compareArrayVals will be null if they do not exist. A shallow compare is performed on objects within the compareObjectVals function.
+To support, Please &#127775; if you used / like this library!
+
+## Todo
+
+- [ ] Add more tests for edge cases.
+- [ ] Update prettier and fix the linter.
+- [ ] Get the Google Closure Compiler working w/ the advanced compile setting, and fix types in the code to reach ~99%.
 
 ## Contribute
 
