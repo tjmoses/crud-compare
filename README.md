@@ -30,12 +30,16 @@ npm install crud-object-diff
 
 ### Comparing Arrays of Objects
 
-`compareObjectVals(toCompareVals: [Object[], Object[]], key?: string|string[])): { createdVals: Object[]|null, updatedVals: Object[]|null, deletedVals: Object[]|null }`
+- Method: `compareObjectVals`
 
-- Provides **Created**, **Updated**, and **Deleted** values (via separate arrays) from comparing two arrays of objects.
-- It is **recommended** to provide a *related unique key* (i.e. primary key on data) between the objects to be compared using the ***compareObjectVals*** function. A single or composite (several keys) key can be provided in an array for relatedObjectKey.
-- Without giving a related key, the algorithm traverses every single key in each provided object looking for when a single object key is matched along with a value with equivalence between the matching found key.
-- The values of the returned created, updated, or deleted arrays from compareObjectVals / compareArrayVals functions will be null if they do not exist.
+- Parameters: `toCompareVals: [Object[], Object[]], key?: string|string[]`
+
+- Returns: `{ createdVals: Object[]|null, updatedVals: Object[]|null, deletedVals: Object[]|null }`
+
+- Provides: **Created**, **Updated**, and **Deleted** values (via separate arrays) from comparing two arrays of objects.
+  - It is **recommended** to provide a *related unique key* (i.e. primary key on data) between the objects to be compared using the ***compareObjectVals*** function. A single or composite (several keys) key can be provided in an array for relatedObjectKey.
+  - Without giving a related key, the algorithm traverses every single key in each provided object looking for when a single object key is matched along with a value with equivalence between the matching found key.
+  - The values of the returned created, updated, or deleted arrays from compareObjectVals / compareArrayVals functions will be null if they do not exist.
 
 ```js
 const originalArrayOfObjects = [{ one: 1, two: 2 }, { test: undefined }];
@@ -56,9 +60,13 @@ See further examples [here](https://github.com/tjmoses/crud-object-diff/blob/mas
 
 ### Comparing Arrays
 
-`compareArrayVals (toCompareVals: [any[], any[]]): { createdVals: any[] | null, deletedVals: any[] | null }`
+- Method: `compareArrayVals`
 
-- Provides **Created** and **Deleted** values between two arrays of primitives (strings, numbers, etc.) using the ***compareArrayVals*** function.
+- Parameters: `toCompareVals: [any[], any[]]`
+
+- Returns: `{ createdVals: any[] | null, deletedVals: any[] | null }`
+
+- Provides: **Created** and **Deleted** values between two arrays of primitives (strings, numbers, etc.) using the ***compareArrayVals*** function.
 
 ```js
 const originalArrayItem = [1, 2, 'five', true, 33];
@@ -75,9 +83,9 @@ See further examples [here](https://github.com/tjmoses/crud-object-diff/blob/mas
 
 ### Comparing Two Arrays or Two Objects via helper functions
 
-`isEqualObject (a: Object, b: Object): Boolean`
+`isEqualObject(a: Object, b: Object): Boolean`
 
-`isEqualArray (a: any[], b: any[]): Boolean`
+`isEqualArray(a: any[], b: any[]): Boolean`
 
 - Deep Object and Array comparing helper functions are provided for quick equivalence checks using the ***isEqualObject*** or ***isEqualArray*** functions. *Note: [Object.is()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/is) is used for primative data type comparison checks.
 
