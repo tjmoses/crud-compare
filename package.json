@@ -1,6 +1,6 @@
 {
   "name": "crud-object-diff",
-  "version": "2.2.0",
+  "version": "2.2.1",
   "description": "Helper utilities to compare objects or arrays for obtaining created, updated, & deleted values.",
   "main": "dist/index.js",
   "repository": {
@@ -25,7 +25,13 @@
     "state compare",
     "js state compare",
     "diff-array-of-objects",
-    "diff-array"
+    "diff-array",
+    "object difference",
+    "objects removed",
+    "objects updated",
+    "diff-arrays-of-objects",
+    "js-diff-arrays",
+    "js diff objects"
   ],
   "author": "Tim M",
   "license": "MIT",

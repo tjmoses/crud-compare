@@ -39,6 +39,19 @@ describe('CompareObjectVals tests', () => {
         expect(createdVals).toStrictEqual([{'test': 22}]);
     });
 
+  test('compareObjectVals functionality w/ undefined value given', () => {
+    const originalArrayOfObjects = [{ one: 1, two: 2 }, { test: undefined }];
+    const newArrayOfObjects = [{ one: 1, two: null }, { one: 22, five: 5 }]
+    const relatedObjectKey = 'one';
+    const { createdVals, updatedVals, deletedVals } = compareObjectVals(
+      [originalArrayOfObjects, newArrayOfObjects],
+      relatedObjectKey // Not required, but suggested for speed.
+    );
+    expect(createdVals).toStrictEqual([{ one: 22, five: 5 }]);
+    expect(updatedVals).toStrictEqual([{ one: 1, two: null }]);
+    expect(deletedVals).toStrictEqual([{ test: undefined }]);
+  });
+
   test('compareObjectVals functionality w/ only updated objects', () => {
         const orgOb1 = [
           {'test': 11, 'key2': 32}, 
@@ -270,31 +283,31 @@ const ob7 = { 'a': 'test', b: 5, c: 22, d: undefined };
 const ob8 = { 'a': 'test', b: 55, c: 22, d: undefined };
 
 describe('isEqualObject helper tests', () => {
-test('isEqualObject basic truthy tests', () => {
-    expect(isEqualObject(ob1, ob2)).toBe(true);
-    expect(isEqualObject(ob3, ob3)).toBe(true);
-    expect(isEqualObject(ob5, ob6)).toBe(true);
+  test('isEqualObject basic truthy tests', () => {
+      expect(isEqualObject(ob1, ob2)).toBe(true);
+      expect(isEqualObject(ob3, ob3)).toBe(true);
+      expect(isEqualObject(ob5, ob6)).toBe(true);
   });
-test('isEqualObject basic falsy tests', () => {
-    expect(isEqualObject(originalArrayOfObjects[0], newArrayOfObjects[0])).toBe(false);
-    expect(isEqualObject(ob3, ob4)).toBe(false);
-    expect(isEqualObject(ob4, ob3)).toBe(false);
-    expect(isEqualObject(ob7, ob8)).toBe(false);
+  test('isEqualObject basic falsy tests', () => {
+      expect(isEqualObject(originalArrayOfObjects[0], newArrayOfObjects[0])).toBe(false);
+      expect(isEqualObject(ob3, ob4)).toBe(false);
+      expect(isEqualObject(ob4, ob3)).toBe(false);
+      expect(isEqualObject(ob7, ob8)).toBe(false);
   });
-test('isEqualObject with nested objects containing array of objects', () => {
-      const oba1 = {a: 1, b: 2, c: {'one': 1, 'two': [{ 2: 1, 44:1 }]}};
-      const oba2 = {a: 1, b: 2, c: {'one': 1, 'two': [{ 2: 1, 44:1 }]}};
-      const oba3 = {a: 1, b: 2, c: {'one': 1, 'two': [{ 2: 1, 44:3 }]}};
-      const oba4 = {a: 1, b: 2, c: {'one': 1, 'two': [{ 44:1 }]}};
-      const oba5 = {a: 1, b: 2, c: {'one': 1, 'two': [22]}};
-      const oba6 = {a: 1, b: 2, c: {'one': 1, 'two': [22]}};
-      expect(isEqualObject(oba1, oba2)).toBe(true);
-      expect(isEqualObject(oba2, oba3)).toBe(false);
-      expect(isEqualObject(oba3, oba4)).toBe(false);
-      expect(isEqualObject(oba4, oba5)).toBe(false);
-      expect(isEqualObject(oba5, oba6)).toBe(true);
+  test('isEqualObject with nested objects containing array of objects', () => {
+        const oba1 = {a: 1, b: 2, c: {'one': 1, 'two': [{ 2: 1, 44:1 }]}};
+        const oba2 = {a: 1, b: 2, c: {'one': 1, 'two': [{ 2: 1, 44:1 }]}};
+        const oba3 = {a: 1, b: 2, c: {'one': 1, 'two': [{ 2: 1, 44:3 }]}};
+        const oba4 = {a: 1, b: 2, c: {'one': 1, 'two': [{ 44:1 }]}};
+        const oba5 = {a: 1, b: 2, c: {'one': 1, 'two': [22]}};
+        const oba6 = {a: 1, b: 2, c: {'one': 1, 'two': [22]}};
+        expect(isEqualObject(oba1, oba2)).toBe(true);
+        expect(isEqualObject(oba2, oba3)).toBe(false);
+        expect(isEqualObject(oba3, oba4)).toBe(false);
+        expect(isEqualObject(oba4, oba5)).toBe(false);
+        expect(isEqualObject(oba5, oba6)).toBe(true);
   });
-test('isEqualObject with nested basic identical array', () => {
+  test('isEqualObject with nested basic identical array', () => {
       const obb1 = {a: 1, b: [2]};
       const obb2 = {a: 1, b: [2]};
       const obb3 = {a: 1, b: [2, 33]};
@@ -316,7 +329,7 @@ test('isEqualObject with nested basic identical array', () => {
 });
 
 describe ('isEqualArray helper tests', () => {
-test('Edge case array compare helper tests.', () => {
+  test('Edge case array compare helper tests.', () => {
     expect(isEqualArray([1], [2])).toBe(false);
     expect(isEqualArray(['one','two'], [Symbol('33')])).toBe(false);
     expect(isEqualArray([[Symbol('33')]], [['one', 'two']])).toBe(false);
