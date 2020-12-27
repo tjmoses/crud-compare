@@ -71,7 +71,7 @@ console.log(createdVals); // ['seven']
 console.log(deletedVals); // [2, 'five']
 ```
 
-See further examples [here](https://github.com/tjmoses/crud-object-diff/blob/master/index.test.js#L218).
+See further examples [here](https://github.com/tjmoses/crud-object-diff/blob/master/index.test.js#L285).
 
 ### Comparing Two Arrays or Two Objects via helper functions
 
