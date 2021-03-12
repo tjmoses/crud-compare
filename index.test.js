@@ -281,18 +281,34 @@ const ob5 = { 'a': Number.NaN };
 const ob6 = { 'a': NaN };
 const ob7 = { 'a': 'test', b: 5, c: 22, d: undefined };
 const ob8 = { 'a': 'test', b: 55, c: 22, d: undefined };
+const ob9 = { 'a': null , b: 55 };
+const ob10 = { 'a': 1, b: 55 };
+const ob11 = { a: undefined, b: 55 };
+const ob12 = { a: undefined, b: 55 };
+const ob13 = { a: null, b: undefined };
+const ob14 = { a: null, b: undefined };
 
 describe('isEqualObject helper tests', () => {
   test('isEqualObject basic truthy tests', () => {
       expect(isEqualObject(ob1, ob2)).toBe(true);
       expect(isEqualObject(ob3, ob3)).toBe(true);
       expect(isEqualObject(ob5, ob6)).toBe(true);
+      expect(isEqualObject(ob11, ob12)).toBe(true);
+      expect(isEqualObject(ob13, ob14)).toBe(true);
+      expect(isEqualObject(ob5, ob5)).toBe(true);
+      expect(isEqualObject(ob6, ob6)).toBe(true);
   });
   test('isEqualObject basic falsy tests', () => {
       expect(isEqualObject(originalArrayOfObjects[0], newArrayOfObjects[0])).toBe(false);
       expect(isEqualObject(ob3, ob4)).toBe(false);
       expect(isEqualObject(ob4, ob3)).toBe(false);
       expect(isEqualObject(ob7, ob8)).toBe(false);
+      expect(isEqualObject(ob9, ob10)).toBe(false);
+      expect(isEqualObject(ob10, ob11)).toBe(false);
+      expect(isEqualObject(ob10, undefined)).toBe(false);
+      expect(isEqualObject(null, undefined)).toBe(false);
+      expect(isEqualObject(null, ob10)).toBe(false);
+      expect(isEqualObject(ob12, ob13)).toBe(false);
   });
   test('isEqualObject with nested objects containing array of objects', () => {
         const oba1 = {a: 1, b: 2, c: {'one': 1, 'two': [{ 2: 1, 44:1 }]}};
@@ -325,6 +341,7 @@ describe('isEqualObject helper tests', () => {
       expect(isEqualObject(obb6, obb7)).toBe(false);
       expect(isEqualObject(obb7, obb8)).toBe(false);
       expect(isEqualObject(obb8, obb9)).toBe(true);
+      expect(isEqualObject(obb7, obb7)).toBe(true);
   });
 });
 
@@ -333,5 +350,12 @@ describe ('isEqualArray helper tests', () => {
     expect(isEqualArray([1], [2])).toBe(false);
     expect(isEqualArray(['one','two'], [Symbol('33')])).toBe(false);
     expect(isEqualArray([[Symbol('33')]], [['one', 'two']])).toBe(false);
+    expect(isEqualArray(null, [['one', 'two']])).toBe(false);
+    expect(isEqualArray(undefined, [['one', 'two']])).toBe(false);
+    expect(isEqualArray(null, undefined)).toBe(false);
+    expect(isEqualArray(null, null)).toBe(true);
+    expect(isEqualArray(undefined, undefined)).toBe(true);
+    expect(isEqualArray(NaN, NaN)).toBe(true);
+    expect(isEqualArray(Number.NaN, NaN)).toBe(true);
   });
 });
