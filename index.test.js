@@ -258,6 +258,24 @@ test('Received two empty array items', () => {
     expect(deletedVals).toStrictEqual(null);
   });
 
+test('Received first undefined value', () => {
+    const { createdVals, deletedVals } = compareArrayVals([undefined, [33]]);
+    expect(createdVals).toStrictEqual([33]);
+    expect(deletedVals).toStrictEqual(null);
+  });
+
+test('Received second undefined value', () => {
+    const { createdVals, deletedVals } = compareArrayVals([[33], undefined]);
+    expect(createdVals).toStrictEqual(null);
+    expect(deletedVals).toStrictEqual([33]);
+  });
+
+test('Received both undefined values', () => {
+    const { createdVals, deletedVals } = compareArrayVals([undefined, undefined]);
+    expect(createdVals).toStrictEqual(null);
+    expect(deletedVals).toStrictEqual(null);
+  });
+
 test('Created Values only.', () => {
     const uniqueSymbol = Symbol('3');
     const { createdVals, deletedVals } = compareArrayVals([['1'], ['1', 2, uniqueSymbol]]);

@@ -11,17 +11,17 @@ import { handleCompareObjectInputValidation } from './validation';
  * Three objects with the corresponding created, updated, and deleted values
  * respectively. Returns null for one of the corresponding values if it doesn't exist.
  */
-function compareObjectVals (
-  toCompareVals: [Object[], Object[]], key?: string|string[]) : 
-  { createdVals: Object[]|null, updatedVals: Object[]|null, deletedVals: Object[]|null } {
+function compareObjectVals<T extends object> (
+  toCompareVals: [T[], T[]], key?: string|string[]) : 
+  { createdVals: T[]|null, updatedVals: T[]|null, deletedVals: T[]|null } {
   
   handleCompareObjectInputValidation(toCompareVals, key);
 
   var createdVals: any[] | null = [];
   var updatedVals: any[] | null = [];
   var deletedVals: any[] | null = [];
-  var originalItem: Object[] = toCompareVals[0];
-  var activeItem: Object[] = toCompareVals[1];
+  var originalItem = toCompareVals[0];
+  var activeItem  = toCompareVals[1];
   var i: number = 0, j: number = 0;
 
   if (!originalItem.length) {
@@ -112,18 +112,23 @@ function compareObjectVals (
  * Returns two arrays corresponding to the created and deleted values
  * respectively. Returns null for one of the corresponding values if it doesn't exist.
  */
-function compareArrayVals (toCompareVals: [any[], any[]]) : { createdVals: any[] | null, deletedVals: any[] | null } {
+function compareArrayVals<T> (toCompareVals: [T[], T[]]) : { createdVals: T[] | null, deletedVals: T[] | null } {
   if (toCompareVals.length !== 2) {
     throw new Error('ToCompareVal arguments are of the wrong length!');
   }
   var originalItem = toCompareVals[0];
   var activeItem = toCompareVals[1];
 
-  if (!originalItem.length) {
+  if (!originalItem || !originalItem.length) {
     return {
-      createdVals: activeItem.length ? activeItem : null,
+      createdVals: activeItem && activeItem.length ? activeItem : null,
       deletedVals: null
     };
+  } else if (!activeItem || !activeItem.length) {
+    return {
+      createdVals: null,
+      deletedVals: originalItem
+    }
   }
   var deletedVals = originalItem.filter(function (v) {
     return activeItem.indexOf(v) === -1;
