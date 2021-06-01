@@ -1,6 +1,6 @@
 {
   "name": "crud-object-diff",
-  "version": "2.3.4",
+  "version": "2.3.5",
   "description": "Helper utilities to compare objects or arrays for obtaining created, updated, & deleted values.",
   "main": "dist/index.js",
   "repository": {
