@@ -35,7 +35,7 @@ jobs:
           paths:
             - ~/.npm
       - run:
-          command: npm start
+          command: npm run build
           name: Compile typescript files
           working_directory: ~/project
       - run:
