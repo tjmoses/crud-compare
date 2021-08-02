@@ -75,15 +75,16 @@ function compareObjectVals<T extends object> (
       }
 
       originalSameKeyValue = sameKeyVal || originalSameKeyValue;
+      // create a boolean key tracker (activeSameKeyValue) for each inner row 
+      // key every time the outer row is ran to obtain whether or not a value was created.
       activeSameKeyValue[j] = sameKeyVal || activeSameKeyValue[j] || false;
+      
       var isLastOriginalItemRun = i === originalItem.length - 1;
-
       if (isLastOriginalItemRun && !activeSameKeyValue[j]) {
          createdVals.push(activeItem[j]);
       }
       else if (
-        isLastOriginalItemRun &&
-        activeSameKeyValue[j] &&
+        sameKeyVal &&
         !isEqualObject(originalItem[i], activeItem[j])) {
         updatedVals.push(activeItem[j]);
       }

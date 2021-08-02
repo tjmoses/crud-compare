@@ -223,6 +223,32 @@ describe('CompareObjectVals tests', () => {
       expect(compareVals.updatedVals).toBe(null);
       expect(compareVals.deletedVals).toBe(null);
     });
+
+  test('mirror values w/ multiple rows', () => {
+    const ob1 = [
+      { id: 1, key2: 'test1' },
+      { id: 2, key2: 'test' }
+    ];
+    const { createdVals, updatedVals, deletedVals } = compareObjectVals([ob1, ob1], 'id');
+        expect(deletedVals).toStrictEqual(null);
+        expect(updatedVals).toStrictEqual(null);
+        expect(createdVals).toStrictEqual(null);
+  });
+
+  test('values have nonmatching key values', () => {
+    const ob1 = [
+      { id: 1, key2: 'test1' },
+      { other: 2, key2: 'test' }
+    ];
+    const ob2 = [
+      { id: 1, key2: 'anothertest' },
+      { other: 5, key2: 'testd' }
+    ]
+    const { createdVals, updatedVals, deletedVals } = compareObjectVals([ob1, ob2]);
+        expect(deletedVals).toStrictEqual([{ key2: "test", other: 2}]);
+        expect(updatedVals).toStrictEqual([{ id: 1, key2: 'anothertest' }]);
+        expect(createdVals).toStrictEqual([{ other: 5, key2: 'testd' }]);
+  })
 });
 
 const originalArrayItem = [1, 2, 'five', true, 33];
@@ -238,7 +264,7 @@ test('compareArrayVals functionality', () => {
     expect(deletedVals).toStrictEqual([2, 'five']);
   });
 
-test('CompareObjectVals input wrong length', () => {
+test('input wrong length', () => {
     try {
       compareArrayVals([originalArrayItem]);
     } catch (e) {
